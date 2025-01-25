@@ -105,7 +105,7 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
 
         print("Gaining user photos... ", end = "")
         
-        if len(list(members.keys())) < 500:
+        if len(list(members.keys())) < AVATAR_TRESHHOLD:
             await dtc.load_photos(app, target_chat, members)
             print("Ok!")
         else:
