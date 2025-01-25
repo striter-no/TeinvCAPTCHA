@@ -11,11 +11,13 @@ Before you start working with the software part you need to register the applica
 Next, move `tg-config.json` from the `templates` folder to the main folder. 
 
 Paste the api_id and api_hash into the appropriate fields:
+Also you need your personal Telegram UID for it.
 
 ```
 {
-“api_id”: “1234”,
-“api_hash”: “abcdef1234”
+    "api_id": "1234",
+    "api_hash": "abcdef1234",
+    "your_id": 1234
 }
 ```
 
@@ -57,9 +59,9 @@ Instead of TYPE - type of group:
 To view the ID you need:
 
 1. Go to Telegram settings
-2. Go to the “Advanced” tab
-3. At the very bottom, click the “Experimental” tab
-4. Enable the display of “Peer IDs”
+2. Go to the "Advanced" tab
+3. At the very bottom, click the "Experimental" tab
+4. Enable the display of "Peer IDs"
 
 ## How to distinguish a group from a supergroup
 

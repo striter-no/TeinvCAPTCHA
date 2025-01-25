@@ -29,6 +29,7 @@ import src.detector as dtc
 tg_config = jn.load(open('./tg-config.json'))
 api_id = tg_config["api_id"]
 api_hash = tg_config["api_hash"]
+YOUR_ID = tg_config["your_id"]
 
 app = tg.Client(
     name="myUser",
@@ -59,7 +60,7 @@ async def get_chat_by_id(
 async def callback(client: tg.client.Client, message: tg.types.Message):
     # print(f"\rnew message from {message.chat.id}: {message.text}", end="\n")
 
-    if message.text and message.from_user and message.from_user.id == 5243956136:
+    if message.text and message.from_user and message.from_user.id == YOUR_ID:
         spl_txt = message.text.split()
         if spl_txt[0] != "!anl":
             return
