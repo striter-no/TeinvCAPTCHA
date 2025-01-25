@@ -125,17 +125,7 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
                 file_name=f"{target_chat.title.replace(' ', '_')}.zip",
             )
 
-def json_print(data, indent_size=4, indent=0):
-    print('{')
-    for k, v in data.items():
-        print(f"{' '*(indent_size*(indent+1))}"+str(k)+': ', end='')
-        if isinstance(v, dict):
-            json_print(v, indent_size=indent_size, indent=indent+2)
-        else:
-            # print(f"Not a dict, it is {type(v)}")
-            print(str(v))
-    
-    print(f"{' '*(indent_size*max(indent-1, 0))}"+'}')
+
 
 def main():
     app.run()
