@@ -4,6 +4,63 @@
 
 This project is designed to analyze group members to identify bots, dead accounts, and inactive members for further administration.
 
+## How to use it
+
+To start using it, it is advisable to create `venv` and use it:
+
+```shell
+python -m venv venv
+source ./venv/bin/activate # For linux
+```
+
+Next, install all the necessary libraries:
+
+```shell
+pip install -r ./reqs.txt
+```
+
+Finally, you can run the main file:
+
+```shell
+python ./main.py
+```
+
+At the beginning you will be prompted to log in to your account, log in. Pass 2FA if you have it enabled.
+
+After in telegram you can write to __any__ chat room 
+
+```plain
+!anl TYPE ID
+```
+
+Where instead of ID is the ID of the group or supergroup
+Instead of TYPE - type of group:
+- `group` : Regular group
+- `supergroup` : Supergroup
+
+
+## Where to see the ID of a group or supergroup
+
+To view the ID you need:
+
+1. Go to Telegram settings
+2. Go to the “Advanced” tab
+3. At the very bottom, click the “Experimental” tab
+4. Enable the display of “Peer IDs”
+
+## How to distinguish a group from a supergroup
+
+- Group:
+    - Number of members up to 200
+    - No invitation link
+    - Private only
+- Supergroup:
+    - Number of participants up to 200'00
+    - Have invitation link
+    - Can be either public or private
+
+
+
 ## How it works
 
 The principle of operation for the Beta 2 version period is as follows: 
