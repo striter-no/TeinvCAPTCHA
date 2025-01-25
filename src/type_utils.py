@@ -1,6 +1,6 @@
 class EmptyClass:
     def __init__(self):
-        pass
+        self._empty_list = [None]
 
     def __getitem__(self, key):
         return self._empty_list[key]

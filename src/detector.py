@@ -95,14 +95,7 @@ async def get_channel_id(
         client: tg.client.Client,
         username: str
 ):
-    try:
-        # Получение информации о чате
-        chat = await client.get_chat(username)
-        # Извлечение ID канала
-        channel_id = chat.id
-        return channel_id
-    except Exception as e:
-        print(f"Error while extracting channel: {e}")
+    pass
 
 async def full_user_info(
         user: tg.types.User,
