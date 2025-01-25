@@ -1,0 +1,9 @@
+__pycache__
+har_and_cookies
+.vscode
+tg-config.json
+reports
+*.session*
+tests
+venv
+*.tar
