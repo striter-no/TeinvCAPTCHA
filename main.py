@@ -25,15 +25,17 @@ import asyncio
 import pyrogram as tg
 import json as jn
 import src.detector as dtc
+import src.archiver as arch
 
 tg_config = jn.load(open('./tg-config.json'))
 api_id = tg_config["api_id"]
 api_hash = tg_config["api_hash"]
+
 YOUR_ID = tg_config["your_id"]
+AVATAR_TRESHHOLD = 1000
 
 app = tg.Client(
-    name="myUser",
-
+    name="TeinvCAPTCHA agent: beta 2",
     api_id=api_id, 
     api_hash=api_hash
 )
@@ -66,6 +68,8 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
             return
 
         group_type = spl_txt[1]
+        send_it_back = False
+        if len(spl_txt) >= 4: send_it_back = spl_txt[3] == "send_back"
 
         origin_chat = message.chat
         target_chat = await get_chat_by_id(int(spl_txt[2]), group_type, app)
@@ -83,8 +87,20 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
             await dtc.load_photos(app, target_chat, members)
             print("Ok!")
         else:
-            await dtc.load_photos(app, target_chat, members)
+            await dtc.load_photos(app, target_chat, members[:AVATAR_TRESHHOLD])
             print("Stopped on treshhold due ennormous amount of data.")
+        
+        print("Archiving report...")
+        arch.archive_report(
+            target_chat.title.replace(' ', '_')
+        )
+        print("Ok!")
+
+        if send_it_back:
+            await app.send_document(
+                YOUR_ID,
+                open(f"./reports/archives/{target_chat.title.replace(' ', '_')}.zip")
+            )
 
 def json_print(data, indent_size=4, indent=0):
     print('{')

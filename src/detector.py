@@ -39,20 +39,12 @@ async def detect_user_messages(
                 async for msg in coroutine:
                     msg: tg.types.Message = msg
                     
-                    if msg.text is None:
-                        msgs.append({
-                            "text": msg.text,
-                            "id": msg.id,
-                            "date": msg.date,
-                            "redacted_time": msg.edit_date
-                        })
-                    else:
-                        msgs.append({
-                            "text": None,
-                            "id": msg.id,
-                            "date": msg.date,
-                            "redacted_time": msg.edit_date
-                        })
+                    msgs.append({
+                        "text": msg.text,
+                        "id": msg.id,
+                        "date": msg.date,
+                        "redacted_time": msg.edit_date
+                    })
                 break
             except tg.errors.exceptions.flood_420.FloodWait as wait_err:
                 wait_time = wait_err.value
@@ -188,6 +180,8 @@ async def detect(
 ) -> dict:
     chat_id = chat.id
     members = dict()
+
+    os.makedirs("./reports", exist_ok=True)
 
     count, max_count = 0, await host_client.get_chat_members_count(chat_id)
     with open(f"./reports/{chat.title.replace(' ', '_')}.report.json", "w") as f:
