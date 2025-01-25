@@ -48,8 +48,8 @@ async def get_chat_by_id(
             oid = "-"
         elif chat_type == "supergroup":
             oid = "-100"
-
-        chat = await client.get_chat(int(oid+str(chat_id)))
+        
+        chat = await client.get_chat(oid+str(chat_id))
         return chat
     except Exception as e:
         print(f"[Error][While fetching chat by ID]: {e}")
@@ -57,7 +57,7 @@ async def get_chat_by_id(
 
 @app.on_message()
 async def callback(client: tg.client.Client, message: tg.types.Message):
-    # print(f"\rnew message from {message.chat.id}: {message.text}", end="")
+    # print(f"\rnew message from {message.chat.id}: {message.text}", end="\n")
 
     if message.text and message.from_user and message.from_user.id == 5243956136:
         spl_txt = message.text.split()
@@ -67,8 +67,7 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
         group_type = spl_txt[1]
 
         origin_chat = message.chat
-        target_chat = await get_chat_by_id(int(spl_txt[2]), app)
-        user = message.from_user
+        target_chat = await get_chat_by_id(int(spl_txt[2]), group_type, app)
         
         await client.delete_messages(
             origin_chat.id, 
@@ -83,7 +82,8 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
             await dtc.load_photos(app, target_chat, members)
             print("Ok!")
         else:
-            print("Stopped due ennormous amount of data.")
+            await dtc.load_photos(app, target_chat, members)
+            print("Stopped on treshhold due ennormous amount of data.")
 
 def json_print(data, indent_size=4, indent=0):
     print('{')

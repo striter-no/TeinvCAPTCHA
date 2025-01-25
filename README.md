@@ -97,7 +97,7 @@ Primary (plain) analysis is obtaining public information about a user, i.e.:
 3. Depending on the number of messages:
 - If there are 0 or 1 (only message about joining the group or basically none), then __level of trust__ becomes 0. This is probably a bot or a dead account
 
-- If there are up to a trishold (50 by default), then each message is pulled out for further analysis:
+- If there are up to a treshhold (50 by default), then each message is pulled out for further analysis:
     - Text
     - Date of change
     - ID

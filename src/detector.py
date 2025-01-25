@@ -193,7 +193,7 @@ async def detect(
     with open(f"./reports/{chat.title.replace(' ', '_')}.report.json", "w") as f:
         f.write('{\n')
         async for member in chat.get_members():
-            print(f"\r[{count+1}/{max_count}] AnalysingㅤmemberㅤID:ㅤ{member.user.id}ㅤusername:ㅤ{member.user.username}", end="") # {'ㅤ'*10}
+            print(f"\r[{count+1}/{max_count}] AnalysingㅤmemberㅤID:ㅤ{member.user.id}ㅤusername:ㅤ{member.user.username}{'ㅤ'*20}", end="") # {'ㅤ'*10}
             
             user = member.user
             sleep_time = 5
@@ -215,8 +215,7 @@ async def detect(
             count += 1
         f.write('\r}')
 
-    # with open("report.json", "w") as f:
-    #     f.write(tu.json_str(members, indent_size=4, exclude_keys=["real_photo"]))
+    print()
 
     return members
 
