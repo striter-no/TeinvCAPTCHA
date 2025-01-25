@@ -2,7 +2,7 @@
 
 ## What is it
 
-This project is designed to analyze group members to identify bots, dead accounts, and inactive members for further administration.
+This project is designed to analyze ad and fishing userbots group members to identify bots, dead accounts, and inactive members for further administration.
 
 ## How to use it
 
