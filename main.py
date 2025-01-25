@@ -58,21 +58,41 @@ async def get_chat_by_id(
         print(f"[Error][While fetching chat by ID]: {e}")
         return None
 
+def get_arguments(text: str):
+    splitted = list(map(lambda x:x.strip(), text.replace("\n", "").strip().split()))
+
+    cmd = splitted[0]
+    arguments = dict()
+
+    for arg in splitted[1:]:
+        arg = arg[2:]
+        if arg.count('=') != 0:
+            eq_splitted = arg.split('=')
+            arguments[eq_splitted[0]] = " ".join(eq_splitted[1:])
+        else:
+            arguments[arg] = True
+    
+    return {
+        "command": cmd,
+        "arguments": arguments
+    }
+
 @app.on_message()
 async def callback(client: tg.client.Client, message: tg.types.Message):
     # print(f"\rnew message from {message.chat.id}: {message.text}", end="\n")
 
     if message.text and message.from_user and message.from_user.id == YOUR_ID:
-        spl_txt = message.text.split()
-        if spl_txt[0] != "!anl":
+        
+        args = get_arguments(message.text)
+        
+        if args["command"] != "!anl":
             return
 
-        group_type = spl_txt[1]
-        send_it_back = False
-        if len(spl_txt) >= 4: send_it_back = spl_txt[3] == "send_back"
+        group_type = args["arguments"]["group_type"]
+        chat_id = args["arguments"]["chat_id"]
 
         origin_chat = message.chat
-        target_chat = await get_chat_by_id(int(spl_txt[2]), group_type, app)
+        target_chat = await get_chat_by_id(int(chat_id), group_type, app)
         
         await client.delete_messages(
             origin_chat.id, 
@@ -82,7 +102,9 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
         print("Gaining members... ", end = "")
         members = await dtc.detect(target_chat, app)
         print("Ok!")
+
         print("Gaining user photos... ", end = "")
+        
         if len(list(members.keys())) < 500:
             await dtc.load_photos(app, target_chat, members)
             print("Ok!")
@@ -96,10 +118,11 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
         )
         print("Ok!")
 
-        if send_it_back:
+        if args["arguments"]["send_back"]:
             await app.send_document(
                 YOUR_ID,
-                open(f"./reports/archives/{target_chat.title.replace(' ', '_')}.zip")
+                open(f"./reports/archives/{target_chat.title.replace(' ', '_')}.zip", "rb"),
+                file_name=f"{target_chat.title.replace(' ', '_')}.zip",
             )
 
 def json_print(data, indent_size=4, indent=0):

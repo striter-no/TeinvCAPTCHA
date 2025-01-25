@@ -22,7 +22,7 @@ async def detect_user_messages(
             break
         except tg.errors.exceptions.flood_420.FloodWait as wait_err:
                 wait_time = wait_err.value
-                print(f"Необходимо подождать {wait_time} секунд.")
+                print(f"Have to wait {wait_time}s.")
                 time.sleep(wait_time)
 
     if msg_count in [0, 1]:  
@@ -48,7 +48,7 @@ async def detect_user_messages(
                 break
             except tg.errors.exceptions.flood_420.FloodWait as wait_err:
                 wait_time = wait_err.value
-                print(f"Необходимо подождать {wait_time} секунд.")
+                print(f"Have to wait {wait_time}s.")
                 time.sleep(wait_time)  # Ждем указанное время
 
         trust = 0.1
@@ -77,7 +77,7 @@ async def detect_user_messages(
                 break
             except tg.errors.exceptions.flood_420.FloodWait as wait_err:
                 wait_time = wait_err.value
-                print(f"Необходимо подождать {wait_time} секунд.")
+                print(f"Have to wait {wait_time}s.")
                 time.sleep(wait_time)
         
         trust = 0.5
@@ -120,7 +120,7 @@ async def full_user_info(
 
         except tg.errors.exceptions.flood_420.FloodWait as wait_err:
             wait_time = wait_err.value
-            print(f"Необходимо подождать {wait_time} секунд.")
+            print(f"Have to wait {wait_time}s.")
             time.sleep(wait_time)  # Ждем указанное время
 
     ruser = await host_client.get_users(user.username)
@@ -187,7 +187,7 @@ async def detect(
     with open(f"./reports/{chat.title.replace(' ', '_')}.report.json", "w") as f:
         f.write('{\n')
         async for member in chat.get_members():
-            print(f"\r[{count+1}/{max_count}] AnalysingㅤmemberㅤID:ㅤ{member.user.id}ㅤusername:ㅤ{member.user.username}{'ㅤ'*20}", end="") # {'ㅤ'*10}
+            print(f"\r[{count+1}/{max_count}] AnalysingㅤmemberㅤID:ㅤ{member.user.id}ㅤusername:ㅤ{member.user.username}", end="\n") # {'ㅤ'*10}
             
             user = member.user
             sleep_time = 5

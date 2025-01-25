@@ -45,7 +45,7 @@ At the beginning you will be prompted to log in to your account, log in. Pass 2F
 After in telegram you can write to __any__ chat room 
 
 ```plain
-!anl TYPE ID
+!anl --group_type TYPE --chat_id ID [--send_back]
 ```
 
 Where instead of ID is the ID of the group or supergroup
@@ -53,6 +53,24 @@ Instead of TYPE - type of group:
 - `group` : Regular group
 - `supergroup` : Supergroup
 
+>TIP: You can type arguments in any order and not only in 1 line:
+
+```
+!anl 
+    --group_type TYPE 
+    --chat_id ID 
+    [--send_back]
+```
+
+
+You can use `--send_back` to send the report archive back to you saved messages. For example:
+
+```plain
+!anl 
+    --group_type group 
+    --chat_id 1234 
+    --send_back
+```
 
 ## Where to see the ID of a group or supergroup
 
