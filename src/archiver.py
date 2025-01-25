@@ -15,5 +15,5 @@ def archive_report(chat_name: str):
 
 if __name__ == "__main__":
     archive_report(
-        "Thoughts"
+        "REPORT_CHAT_NAME"
     )
