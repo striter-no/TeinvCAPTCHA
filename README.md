@@ -6,6 +6,19 @@ This project is designed to analyze group members to identify bots, dead account
 
 ## How to use it
 
+Before you start working with the software part you need to register the application in Telegram (via [this link](https://my.telegram.org/auth?to=apps)). You need to create an application and copy api_id and api_hash from there.
+
+Next, move `tg-config.json` from the `templates` folder to the main folder. 
+
+Paste the api_id and api_hash into the appropriate fields:
+
+```
+{
+“api_id”: “1234”,
+“api_hash”: “abcdef1234”
+}
+```
+
 To start using it, it is advisable to create `venv` and use it:
 
 ```shell
