@@ -39,18 +39,24 @@ app = tg.Client(
 
 async def get_chat_by_id(
         chat_id: int,
+        chat_type: str,
         client: tg.client.Client
 ):
     try:
-        chat = await client.get_chat(int("-100"+str(chat_id)))
+        oid = ""
+        if chat_type == "group":
+            oid = "-"
+        elif chat_type == "supergroup":
+            oid = "-100"
+
+        chat = await client.get_chat(int(oid+str(chat_id)))
         return chat
     except Exception as e:
-        print(f"Ошибка: {e}")
+        print(f"[Error][While fetching chat by ID]: {e}")
         return None
 
 @app.on_message()
 async def callback(client: tg.client.Client, message: tg.types.Message):
-    # if message.text and message.chat.id==5243956136:
     # print(f"\rnew message from {message.chat.id}: {message.text}", end="")
 
     if message.text and message.from_user and message.from_user.id == 5243956136:
@@ -58,8 +64,10 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
         if spl_txt[0] != "!anl":
             return
 
+        group_type = spl_txt[1]
+
         origin_chat = message.chat
-        target_chat = await get_chat_by_id(int(spl_txt[1]), app)
+        target_chat = await get_chat_by_id(int(spl_txt[2]), app)
         user = message.from_user
         
         await client.delete_messages(
@@ -67,9 +75,6 @@ async def callback(client: tg.client.Client, message: tg.types.Message):
             message.id
         )
 
-        # print(f"Chat ID: {message.chat.id} ({message.chat.type})\n\tContent: {str(message.text[:100]).strip()}")
-        
-        # json_print(await dtc.full_user_info(chat, user, client), indent_size=4)
         print("Gaining members... ", end = "")
         members = await dtc.detect(target_chat, app)
         print("Ok!")
@@ -96,8 +101,4 @@ def main():
     app.run()
 
 if __name__ == "__main__":
-    
-    # Хата: -1001853540825
-    # Хата: XXXX1853540825
-
     main()
