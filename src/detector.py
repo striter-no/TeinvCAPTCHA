@@ -3,6 +3,14 @@ import json as jn
 import time
 import os
 import src.type_utils as tu
+import hashlib
+
+def get_chat_name(
+        chat: tg.types.Chat
+):
+    hashed = hashlib.sha256(chat.title.encode("utf-8")).hexdigest()
+    return (hashed, tu.wrap_json_escape(chat.title))
+    
 
 async def detect_user_messages(
         host_client: tg.client.Client,
@@ -174,10 +182,18 @@ async def detect(
     chat_id = chat.id
     members = dict()
 
+    chat_hash, chat_name = get_chat_name(chat)
+    
     os.makedirs("./reports", exist_ok=True)
+    os.makedirs(f"./reports/{chat_hash}", exist_ok=True)
+    
+    with open(f"./reports/{chat_hash}/config.json", "w") as f:
+        jn.dump({
+            "chat_name": chat_name,
+        }, f)
 
     count, max_count = 0, await host_client.get_chat_members_count(chat_id)
-    with open(f"./reports/{chat.title.replace(' ', '_')}.report.json", "w") as f:
+    with open(f"./reports/{chat_hash}.report.json", "w") as f:
         f.write('{\n')
         async for member in chat.get_members():
             print(f"\r[{count+1}/{max_count}] AnalysingㅤmemberㅤID:ㅤ{member.user.id}ㅤusername:ㅤ{member.user.username}", end="\n") # {'ㅤ'*10}
@@ -207,18 +223,21 @@ async def detect(
     return members
 
 async def load_photos(
-        client: tg.Client,
+        client: tg.client.Client,
         chat: tg.types.Chat,
         members
 ):
+
+    chat_hash, chat_name = get_chat_name(chat)
+
     os.makedirs("./reports/photos", exist_ok=True)
-    os.makedirs(f"./reports/photos/{chat.title.replace(' ', '_')}", exist_ok=True)
+    os.makedirs(f"./reports/photos/{chat_hash}", exist_ok=True)
     for user_id, user_info in members.items():
         if user_info["photo"]:
             try:
                 await client.download_media(
                     user_info["real_photo"].small_file_id, 
-                    file_name=f"./reports/photos/{chat.title.replace(' ', '_')}/{user_id}.jpg"
+                    file_name=f"./reports/photos/{chat_hash}/{user_id}.jpg"
                 )
             except:
                 pass
