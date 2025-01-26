@@ -8,7 +8,7 @@ import hashlib
 def get_chat_name(
         chat: tg.types.Chat
 ):
-    hashed = hashlib.sha256(chat.title.encode("utf-8")).hexdigest()
+    hashed = hashlib.sha256(str(chat.id).encode("utf-8")).hexdigest()
     return (hashed, tu.wrap_json_escape(chat.title))
     
 
