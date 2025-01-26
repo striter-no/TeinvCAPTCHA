@@ -7,4 +7,5 @@ reports
 tests
 venv
 *.tar
-data-bases/*
+data-bases/*.csv
+configs/*

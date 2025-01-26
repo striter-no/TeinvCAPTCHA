@@ -45,7 +45,7 @@ At the beginning you will be prompted to log in to your account, log in. Pass 2F
 After in telegram you can write to __any__ chat room 
 
 ```plain
-!anl --group_type TYPE --chat_id ID [--send_back]
+!anl --group_type=TYPE --chat_id=ID [--send_back]
 ```
 
 Where instead of ID is the ID of the group or supergroup
@@ -57,8 +57,8 @@ Instead of TYPE - type of group:
 
 ```
 !anl 
-    --group_type TYPE 
-    --chat_id ID 
+    --group_type=TYPE 
+    --chat_id=ID 
     [--send_back]
 ```
 

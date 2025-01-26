@@ -1,5 +1,5 @@
-import src.gpt_source as gpt
-import src.analyzer as anl
+import Analysis.gpt_source as gpt
+import Analysis.analyzer as anl
 
 if __name__ == "__main__":
 
